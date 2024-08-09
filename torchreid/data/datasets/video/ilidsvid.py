@@ -22,13 +22,14 @@ class iLIDSVID(VideoDataset):
         - cameras: 2.
     """
     dataset_dir = 'ilids-vid'
-    dataset_url = 'http://www.eecs.qmul.ac.uk/~xiatian/iLIDS-VID/iLIDS-VID.tar'
+    dataset_url = 'https://mega.nz/file/ZzZgwKpQ#nQuTo9h9gRGBQ4l6k1VZDHYXDckfyg0-SKGOhrk5CSk'
 
     def __init__(self, root='', split_id=0, **kwargs):
-        self.root = osp.abspath(osp.expanduser(root))
-        self.dataset_dir = osp.join(self.root, self.dataset_dir)
-        self.download_dataset(self.dataset_dir, self.dataset_url)
+        #self.root = osp.abspath(osp.expanduser(root))
+        #self.dataset_dir = osp.join(self.root, self.dataset_dir)
+        #self.download_dataset(self.dataset_dir, self.dataset_url)
 
+        self.dataset_dir = osp.join(root, self.dataset_dir)
         self.data_dir = osp.join(self.dataset_dir, 'i-LIDS-VID')
         self.split_dir = osp.join(self.dataset_dir, 'train-test people splits')
         self.split_mat_path = osp.join(
