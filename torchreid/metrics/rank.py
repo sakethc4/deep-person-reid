@@ -105,7 +105,17 @@ def eval_market1501(distmat, q_pids, g_pids, q_camids, g_camids, max_rank):
         )
 
     indices = np.argsort(distmat, axis=1)
+
+
+    # Checking oob error.
+    if indices.max() >= len(g_pids):
+        print(f"distmat shape: {distmat.shape}")
+        print(f"q_pids length: {len(q_pids)}")
+        print(f"g_pids length: {len(g_pids)}")
+        raise ValueError(f"Index {indices.max()} is out of bounds for gallery size {len(g_pids)}")
+
     matches = (g_pids[indices] == q_pids[:, np.newaxis]).astype(np.int32)
+
 
     # compute cmc curve for each query
     all_cmc = []
