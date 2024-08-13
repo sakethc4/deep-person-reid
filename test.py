@@ -51,8 +51,6 @@ def main():
             # Aggregate features across the sequence dimension
             if self.aggregation == 'avg':
                 x = x.mean(dim=1)  # Average pooling
-            elif self.aggregation == 'max':
-                x = x.max(dim=1)[0]  # Max pooling
             else:
                 raise ValueError(f"Unknown aggregation method: {self.aggregation}")
             
