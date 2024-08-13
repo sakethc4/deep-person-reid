@@ -6,7 +6,7 @@ from torchreid.data.datasets.video import iLIDSVID
 def main():
     # Imported Model
     model = torchreid.models.build_model(
-        name='resnext50_32x4d',
+        name='osnet_x0_5',
         num_classes=751,
         pretrained=True
     )
@@ -24,6 +24,7 @@ def main():
         batch_size_test=5,
     )
 
+    """
     # Wrap the model to handle the reshaping
     class ReshapeModel(torch.nn.Module):
         def __init__(self, model, aggregation='avg'):
@@ -33,11 +34,11 @@ def main():
 
         def forward(self, x):
             batch_size, seq_len, channels, height, width = x.shape
-            print(f'Original input shape: {x.shape}')
+            #print(f'Original input shape: {x.shape}')
             
             # Reshape to (batch_size * seq_len, channels, height, width)
             x = x.view(-1, channels, height, width)
-            print(f'Reshaped input shape: {x.shape}')
+            #print(f'Reshaped input shape: {x.shape}')
             
             # Forward pass through the model
             x = self.model(x)
@@ -45,7 +46,7 @@ def main():
             # Reshape back to (batch_size, seq_len, output_dim)
             output_dim = x.shape[1]
             x = x.view(batch_size, seq_len, output_dim)
-            print(f'Output shape before aggregation: {x.shape}')
+            #print(f'Output shape before aggregation: {x.shape}')
             
             # Aggregate features across the sequence dimension
             if self.aggregation == 'avg':
@@ -55,12 +56,12 @@ def main():
             else:
                 raise ValueError(f"Unknown aggregation method: {self.aggregation}")
             
-            print(f'Output shape after aggregation: {x.shape}')
+            #print(f'Output shape after aggregation: {x.shape}')
             return x
-    model = ReshapeModel(model)
-
+    #model = ReshapeModel(model)
+    """
     # Attempting to set up engine for testing
-    engine = torchreid.engine.ImageSoftmaxEngine(
+    engine = torchreid.engine.VideoSoftmaxEngine(
         datamanager=datamanager,
         model=model,
         optimizer=None,  # No optimizer for testing
